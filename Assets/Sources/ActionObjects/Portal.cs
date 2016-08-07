@@ -1,0 +1,34 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
+
+public class Portal : MonoBehaviour 
+{
+	[SerializeField]
+	private string _nextLevel;
+	[SerializeField]
+	private float _trasintionDelay;
+
+	private void OnTriggerEnter(Collider pOther)
+	{
+		GameObject obj = pOther.gameObject;
+		if(obj.tag == "Player")
+		{
+			if(string.IsNullOrEmpty(_nextLevel))
+			{
+				Debug.LogError("Next Level is Empty - no trasition will happen");
+			}
+			else 
+			{
+				StartCoroutine(Delay());
+			}
+		}
+	}
+
+	private IEnumerator Delay()
+	{
+		yield return new WaitForSeconds(_trasintionDelay);
+
+		SceneManager.LoadScene(_nextLevel);
+	}
+}
