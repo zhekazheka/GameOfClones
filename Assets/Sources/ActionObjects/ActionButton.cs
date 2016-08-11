@@ -26,9 +26,6 @@ public class ActionButton : MonoBehaviour, IGameResetable
 	[SerializeField]
 	private List<GameObject> listeners = new List<GameObject>();
 
-	public delegate void OnButtonInteract(EActionButtonState pNewState);
-	public event OnButtonInteract onButtonInteract;
-
 	private EActionButtonState _currentState;
 	public  EActionButtonState currentState
 	{
@@ -65,11 +62,6 @@ public class ActionButton : MonoBehaviour, IGameResetable
 			currentState = EActionButtonState.Pressed;
 
 			TriggerListeners(currentState);
-
-			if(onButtonInteract != null)
-			{
-				onButtonInteract(_currentState);
-			}
 		}
 	}
 
@@ -81,11 +73,6 @@ public class ActionButton : MonoBehaviour, IGameResetable
 			currentState = EActionButtonState.Unpressed;
 
 			TriggerListeners(currentState);
-
-			if(onButtonInteract != null)
-			{
-				onButtonInteract(_currentState);
-			}
 		}
 	}
 
