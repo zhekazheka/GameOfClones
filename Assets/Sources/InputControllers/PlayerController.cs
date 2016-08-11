@@ -23,14 +23,14 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
-		bool isNextPressed = CrossPlatformInputManager.GetButtonDown("Fire2");
+		bool isNextPressed = CrossPlatformInputManager.GetButtonDown("NextClone");
 		if(isNextPressed)
 		{
 			onFinishPressed(true);
 			return;
 		}
 
-		bool isPrevPressed = CrossPlatformInputManager.GetButtonDown("Fire1");
+		bool isPrevPressed = CrossPlatformInputManager.GetButtonDown("PrevClone");
 		if(isPrevPressed)
 		{
 			onFinishPressed(false);

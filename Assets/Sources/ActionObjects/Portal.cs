@@ -27,8 +27,15 @@ public class Portal : MonoBehaviour
 
 	private IEnumerator Delay()
 	{
-		yield return new WaitForSeconds(_trasintionDelay);
+		// 42 - THE NUMBER ^_^
+		Time.timeScale = 0.42f;
+	
+		float startTime = Time.unscaledTime;
+		while(Time.unscaledTime - startTime < _trasintionDelay)
+		{
+			yield return new WaitForFixedUpdate();
+		}
 
-		SceneManager.LoadScene(_nextLevel);
+		MapLoader.LoadMap(_nextLevel);
 	}
 }

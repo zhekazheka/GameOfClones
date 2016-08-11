@@ -23,10 +23,16 @@ public class UIController : MonoBehaviour
 
 	private LayersController _layersController;
 
-	private Dictionary<string, UIBaseElement> uiElementsPool = new Dictionary<string, UIBaseElement>();
+	private Dictionary<string, UIBaseElement> openedUIElements = new Dictionary<string, UIBaseElement>();
 
 	private void Awake()
 	{
+		if(_instace != null)
+		{
+			Destroy(gameObject);
+			return;
+		}
+
 		_instace = this;
 
 		_layersController = GetComponentInChildren<LayersController>();
@@ -36,30 +42,37 @@ public class UIController : MonoBehaviour
 
 	#region Public Methods
 
-	public void Show(UIAssetDescription pAssetDescription)
+	public UIBaseElement Show(UIAssetDescription pAssetDescription, IUIProperties pProperties = null)
 	{
 		UIBaseElement uiElement;
-		if(uiElementsPool.ContainsKey(pAssetDescription.prefabName))
+
+		// [warn]: currently only one the same ui element can be opne at the time, if this should be different change it here 
+		if(openedUIElements.ContainsKey(pAssetDescription.prefabName))
 		{
-			uiElement = uiElementsPool[pAssetDescription.prefabName];
+			uiElement = openedUIElements[pAssetDescription.prefabName];
 		}
 		else 
 		{
 			GameObject uiPrefab = ResourcesManager.GetUIPrefab(pAssetDescription.prefabName, pAssetDescription.prefabPath);
 			GameObject uiInstance = Instantiate(uiPrefab);
+			uiInstance.name = pAssetDescription.prefabName;
 			AssignParent(pAssetDescription.uiType, uiInstance.transform);
 
 			uiElement = uiInstance.GetComponent<UIBaseElement>();
+
+			openedUIElements.Add(pAssetDescription.prefabName, uiElement);
 		}
 
 		uiElement.Show();
+
+		return uiElement;
 	}
 
 	public void Hide(UIAssetDescription pAssetDescription)
 	{
-		if(uiElementsPool.ContainsKey(pAssetDescription.prefabName))
+		if(openedUIElements.ContainsKey(pAssetDescription.prefabName))
 		{
-			UIBaseElement uiElement = uiElementsPool[pAssetDescription.prefabName];
+			UIBaseElement uiElement = openedUIElements[pAssetDescription.prefabName];
 			uiElement.Hide();
 		}
 		else 
@@ -68,16 +81,29 @@ public class UIController : MonoBehaviour
 		}
 	}
 
-	public void Remove(UIAssetDescription pAssetDescription)
+	public void Remove(string pElementName)
 	{
-		if(uiElementsPool.ContainsKey(pAssetDescription.prefabName))
+		if(openedUIElements.ContainsKey(pElementName))
 		{
-			UIBaseElement uiElement = uiElementsPool[pAssetDescription.prefabName];
-			uiElement.Close();
+			UIBaseElement uiElement = openedUIElements[pElementName];
+			Destroy(uiElement.gameObject);
+
+			openedUIElements.Remove(pElementName);
 		}
 		else 
 		{
-			Debug.LogError("Can't Remove ui element with name: " + pAssetDescription.prefabName + " and type: " + pAssetDescription.uiType);
+			Debug.LogError("Can't Remove ui element with name: " + pElementName);
+		}
+	}
+
+	public void Clear()
+	{
+		List<string> allKeys = new List<string>(openedUIElements.Keys);
+
+		for(int i = 0; i < allKeys.Count; ++i)
+		{
+			string uiElementName = allKeys[i];
+			Remove(uiElementName);
 		}
 	}
 

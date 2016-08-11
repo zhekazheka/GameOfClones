@@ -12,11 +12,11 @@ public class GameState : MonoBehaviour
 	private List<IGameResetable> resetables = new List<IGameResetable>();
 
 	private int _currentRecordIndex;
-	private int _maxShadowsAmount;
+	private int _maxClonesAmount;
 
 	public void Init(int pMaxShadowAmount)
 	{
-		_maxShadowsAmount = pMaxShadowAmount;
+		_maxClonesAmount = pMaxShadowAmount;
 		_currentRecordIndex = 0;
 
 		_recordedInput = new List<Dictionary<int, Vector2>>();
@@ -28,6 +28,10 @@ public class GameState : MonoBehaviour
 		{
 			resetables.Add(interactableObjs[i].GetInterface<IGameResetable>());
 		}
+
+		// TODO change initialization of UI with properties. This is very bad and late :(
+		UIBaseElement<GameHUDPanelProperties> gameHUD = (UIBaseElement<GameHUDPanelProperties>)UIController.instance.Show(UIElementsDescriptions.gameHUDDescription);
+		gameHUD.SetProperties(new GameHUDPanelProperties(_maxClonesAmount));
 	}
 
 	public void Reset()
@@ -38,11 +42,11 @@ public class GameState : MonoBehaviour
 		}
 	}
 
-	public void NextShadow()
+	public void NextClone()
 	{
 		++_currentRecordIndex;
 
-		_currentRecordIndex = Mathf.Min(_currentRecordIndex, _maxShadowsAmount - 1);
+		_currentRecordIndex = Mathf.Min(_currentRecordIndex, _maxClonesAmount - 1);
 
 		if(_currentRecordIndex < _recordedInput.Count)
 		{
@@ -55,7 +59,7 @@ public class GameState : MonoBehaviour
 		}
 	}
 
-	public void PrevShadow()
+	public void PrevClone()
 	{
 		--_currentRecordIndex;
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UIBaseElement : MonoBehaviour 
+public class UIBaseElement : MonoBehaviour
 {
 	public virtual void Show()
 	{
@@ -15,11 +15,21 @@ public class UIBaseElement : MonoBehaviour
 
 	public virtual void Close()
 	{
-		Destroy(gameObject);
+		UIController.instance.Remove(name);
 	}
 
 	protected virtual void OnDestroy()
 	{
 
+	}
+}
+
+public class UIBaseElement<T> : UIBaseElement where T : IUIProperties
+{
+	protected T properties;
+
+	public virtual void SetProperties(T pProperties)
+	{
+		properties = pProperties;
 	}
 }

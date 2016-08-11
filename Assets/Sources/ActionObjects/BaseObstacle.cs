@@ -3,9 +3,13 @@ using System.Collections;
 
 public class BaseObstacle : MonoBehaviour, IActionListener, IGameResetable
 {
+	[Header("Interactable Colliders")]
+	[SerializeField]
+	protected Collider[] _colliders;
+
 	#region IGameResetable implementation
 
-	public void Reset()
+	public virtual void Reset()
 	{
 		gameObject.SetActive(true);
 	}
@@ -14,9 +18,12 @@ public class BaseObstacle : MonoBehaviour, IActionListener, IGameResetable
 
 	#region IActionListener implementation
 
-	public void OnActionButton(EActionButtonState pState)
+	public virtual void OnActionButton(EActionButtonState pState)
 	{
-		gameObject.SetActive(pState == EActionButtonState.Unpressed);
+		for(int i = 0; i < _colliders.Length; ++i) 
+		{
+			_colliders[i].enabled = pState == EActionButtonState.Unpressed;
+		}
 	}
 
 	#endregion

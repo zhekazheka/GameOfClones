@@ -13,7 +13,7 @@ GameObject:
   - 54: {fileID: 5467860}
   - 136: {fileID: 13674348}
   m_Layer: 8
-  m_Name: Shadow
+  m_Name: Clone
   m_TagString: Shadow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fca33cfcf2934ff397275121a6747c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 08f222b34ed864714953ced9ca3d4b55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _pawn: {fileID: 11470756}

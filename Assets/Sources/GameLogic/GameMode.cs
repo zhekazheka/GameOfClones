@@ -14,7 +14,7 @@ public class GameMode : MonoBehaviour
 
 	[Header("Stage Settings")]
 	[SerializeField]
-	private int _maxShadowsAmount = 2;
+	private int _maxClonesAmount = 2;
 
 	private Transform _playerStartTran;
 
@@ -43,7 +43,9 @@ public class GameMode : MonoBehaviour
 		_characterPawn = _spawnedCharacter.GetComponent<CharacterPawn>();
 		_characterPawn.SetNumber(1);
 
-		_gameState.Init(_maxShadowsAmount);
+		FrameCounter.Reset();
+
+		_gameState.Init(_maxClonesAmount);
 	}
 
 	private void Destroy()
@@ -72,11 +74,11 @@ public class GameMode : MonoBehaviour
 	{
 		if(pIsNextShadow)
 		{
-			_gameState.NextShadow();
+			_gameState.NextClone();
 		}
 		else 
 		{
-			_gameState.PrevShadow();
+			_gameState.PrevClone();
 		}
 	}
 
@@ -119,7 +121,7 @@ public class GameMode : MonoBehaviour
 			CharacterPawn shadowPawn = shadow.GetComponent<CharacterPawn>();
 			shadowPawn.SetNumber(pIndex + 1);
 
-			ShadowController controller = shadow.GetComponent<ShadowController>();
+			CloneController controller = shadow.GetComponent<CloneController>();
 			controller.Init(pInput);
 		}
 

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MainMenuPanel : UIBaseElement 
+public class MainMenuPanel : UIBaseElement<IUIProperties>
 {
 	[Header("Buttons")]
 	[SerializeField]
@@ -32,9 +32,7 @@ public class MainMenuPanel : UIBaseElement
 
 	private void OnStartGameClick()
 	{
-		SceneManager.LoadScene(MapsConstants.LEVEL + "00");
-
-		Close();
+		MapLoader.LoadMap(MapsConstants.LEVEL + "00");
 	}
 
 	private void OnExitGameClick()

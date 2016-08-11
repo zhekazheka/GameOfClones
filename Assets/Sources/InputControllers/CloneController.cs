@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ShadowController : MonoBehaviour 
+public class CloneController : MonoBehaviour 
 {
 	[SerializeField]
 	private CharacterPawn _pawn;
