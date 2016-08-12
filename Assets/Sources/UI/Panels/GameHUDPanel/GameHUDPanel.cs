@@ -10,9 +10,11 @@ public class GameHUDPanel : UIBaseElement<GameHUDPanelProperties>
 	[SerializeField]
 	private Button btnPause;
 
-	public override void Show()
+	public override void Init()
 	{
-		base.Show();
+		base.Init();
+
+		txtClonesCount.text = properties.maxClonesCount.ToString();
 
 		btnPause.onClick.AddListener(OnPauseClick);
 	}
@@ -22,13 +24,6 @@ public class GameHUDPanel : UIBaseElement<GameHUDPanelProperties>
 		btnPause.onClick.RemoveListener(OnPauseClick);
 
 		base.OnDestroy();
-	}
-
-	public override void SetProperties(GameHUDPanelProperties pProperties)
-	{
-		base.SetProperties(pProperties);
-
-		txtClonesCount.text = properties.maxClonesCount.ToString();
 	}
 
 	private void OnPauseClick()

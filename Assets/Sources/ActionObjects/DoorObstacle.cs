@@ -13,6 +13,9 @@ public class DoorObstacle : BaseObstacle
 	[SerializeField]
 	private Transform finishOpenTransfom;
 
+	[SerializeField]
+	private float openningSpeed = 2.0f;
+
 	private bool _isOpenning;
 
 	public override void OnActionButton(EActionButtonState pState)
@@ -36,7 +39,7 @@ public class DoorObstacle : BaseObstacle
 	{
 		if(Vector3.Distance(door.localPosition, finishOpenTransfom.localPosition) > 0.1f)
 		{
-			door.localPosition = Vector3.MoveTowards(door.localPosition, finishOpenTransfom.localPosition, Time.deltaTime * 2.0f);
+			door.localPosition = Vector3.MoveTowards(door.localPosition, finishOpenTransfom.localPosition, Time.deltaTime * openningSpeed);
 		}
 	}
 
@@ -44,7 +47,7 @@ public class DoorObstacle : BaseObstacle
 	{
 		if(Vector3.Distance(door.localPosition, finishCloseTransfom.localPosition) > 0.1f)
 		{
-			door.localPosition = Vector3.MoveTowards(door.localPosition, finishCloseTransfom.localPosition, Time.deltaTime * 2.0f);
+			door.localPosition = Vector3.MoveTowards(door.localPosition, finishCloseTransfom.localPosition, Time.deltaTime * openningSpeed);
 		}
 	}
 }

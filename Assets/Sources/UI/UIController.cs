@@ -63,6 +63,12 @@ public class UIController : MonoBehaviour
 			openedUIElements.Add(pAssetDescription.prefabName, uiElement);
 		}
 
+		if(pProperties != null)
+		{
+			uiElement.SetProperties(pProperties);
+		}
+
+		uiElement.Init();
 		uiElement.Show();
 
 		return uiElement;

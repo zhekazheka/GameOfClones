@@ -28,10 +28,8 @@ public class GameState : MonoBehaviour
 		{
 			resetables.Add(interactableObjs[i].GetInterface<IGameResetable>());
 		}
-
-		// TODO change initialization of UI with properties. This is very bad and late :(
-		UIBaseElement<GameHUDPanelProperties> gameHUD = (UIBaseElement<GameHUDPanelProperties>)UIController.instance.Show(UIElementsDescriptions.gameHUDDescription);
-		gameHUD.SetProperties(new GameHUDPanelProperties(_maxClonesAmount));
+			
+		UIController.instance.Show(UIElementsDescriptions.gameHUDDescription, new GameHUDPanelProperties(_maxClonesAmount));
 	}
 
 	public void Reset()

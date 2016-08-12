@@ -12,9 +12,9 @@ public class MainMenuPanel : UIBaseElement<IUIProperties>
 	[SerializeField]
 	private Button btnExitGame;
 
-	public override void Show()
+	public override void Init()
 	{
-		base.Show();
+		base.Init();
 
 		btnStartGame.onClick.AddListener(OnStartGameClick);
 		btnExitGame.onClick.AddListener(OnExitGameClick);

@@ -3,6 +3,10 @@ using System.Collections;
 
 public class UIBaseElement : MonoBehaviour
 {
+	public virtual void SetProperties(IUIProperties pProperties) {}
+
+	public virtual void Init() {}
+
 	public virtual void Show()
 	{
 		gameObject.SetActive(true);
@@ -24,12 +28,12 @@ public class UIBaseElement : MonoBehaviour
 	}
 }
 
-public class UIBaseElement<T> : UIBaseElement where T : IUIProperties
+public class UIBaseElement<TProperties> : UIBaseElement where TProperties : IUIProperties
 {
-	protected T properties;
+	protected TProperties properties;
 
-	public virtual void SetProperties(T pProperties)
+	public override void SetProperties(IUIProperties pProperties)
 	{
-		properties = pProperties;
+		properties = (TProperties)pProperties;
 	}
 }
